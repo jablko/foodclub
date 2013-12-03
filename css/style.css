@@ -1,0 +1,514 @@
+body {
+  padding-bottom: 40px;
+  width: 133.33333333333333%;
+}
+
+body:after {
+  clear: both;
+}
+
+body:after,
+body:before {
+  content: ' ';
+  display: table;
+}
+
+h1 {
+  margin: 20px 15px 10px;
+}
+
+thead {
+  text-transform: uppercase;
+}
+
+tbody > tr > td:empty {
+  padding: 0;
+}
+
+tbody > tr.fc-form > td {
+  padding: 5px 20px;
+}
+
+.form-control:-moz-placeholder {
+  color: #777;
+}
+
+.form-control:focus:-moz-placeholder {
+  color: #999;
+}
+
+.form-control::-moz-placeholder {
+  color: #777;
+}
+
+.form-control:focus::-moz-placeholder {
+  color: #999;
+}
+
+.form-control:-ms-input-placeholder {
+  color: #777;
+}
+
+.form-control:focus:-ms-input-placeholder {
+  color: #999;
+}
+
+.form-control::-webkit-input-placeholder {
+  color: #777;
+}
+
+.form-control:focus::-webkit-input-placeholder {
+  color: #999;
+}
+
+.close {
+  margin-top: -2px;
+}
+
+.fc-being-ordered,
+.fc-my-order {
+  width: 100%;
+}
+
+.fc-being-ordered .fc-main,
+.fc-my-order .fc-main {
+  width: 100%;
+}
+
+.fc-being-ordered .fc-form:not(.fc-being-ordered-tr),
+.fc-being-ordered .fc-heading,
+.fc-being-ordered .fc-item:not(.fc-being-ordered-tr) {
+  display: none;
+}
+
+.fc-being-ordered .fc-sidebar,
+.fc-my-order .fc-sidebar {
+  display: none;
+}
+
+.fc-can,
+.fc-lid {
+  background: url(../trash.png);
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  margin: auto;
+  right: 0;
+  width: 14px;
+}
+
+.fc-can {
+  background-position: 0 -4px;
+  bottom: 0;
+  height: 12px;
+}
+
+.fc-lid {
+  bottom: 10px;
+  height: 6px;
+  -webkit-transform-origin: -7% 100%;
+      -ms-transform-origin: -7% 100%;
+          transform-origin: -7% 100%;
+  -webkit-transition: -webkit-transform .15s;
+     -moz-transition: -moz-transform .15s;
+       -o-transition: -o-transform .15s;
+          transition: transform .15s;
+}
+
+.btn:focus .fc-lid,
+.btn:hover .fc-lid {
+  -webkit-transform: rotate(-45deg);
+      -ms-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+  -webkit-transition: -webkit-transform .25s;
+     -moz-transition: -moz-transform .25s;
+       -o-transition: -o-transform .25s;
+          transition: transform .25s;
+}
+
+.fc-code,
+.fc-order,
+.fc-weight {
+  white-space: nowrap;
+}
+
+.fc-collapse {
+  display: none;
+}
+
+.fc-footer {
+  bottom: 0;
+  left: 100%;
+  position: fixed;
+  width: 100%;
+}
+
+.fc-footer > * {
+  float: left;
+  left: -50%;
+  position: relative;
+}
+
+.fc-footer > * > * {
+  background: #563d7c;
+  left: -50%;
+  position: relative;
+}
+
+.fc-footer > * > :after {
+  clear: both;
+}
+
+.fc-footer > * > :after,
+.fc-footer > * > :before {
+  content: ' ';
+  display: table;
+}
+
+.fc-footer > * > * > *,
+.fc-footer .nav > li {
+  float: left;
+}
+
+.fc-footer .btn-default {
+  background: #f7f5fa;
+  border: 0;
+  line-height: 24px;
+  margin: 8px 0;
+  padding: 0 10px;
+}
+
+.fc-footer .btn-default:focus,
+.fc-footer .btn-default:hover {
+  background: #e5e3e9;
+}
+
+.fc-footer .btn-link {
+  border: 0;
+  text-decoration: none;
+}
+
+.fc-footer .btn-link,
+.fc-footer .nav > li > a,
+.fc-footer .nav > .disabled > a,
+.fc-footer .nav > .disabled > a:focus,
+.fc-footer .nav > .disabled > a:hover {
+  color: #cdbfe3;
+  line-height: 40px;
+}
+
+.fc-expand-collapse,
+.fc-footer .btn-link,
+.fc-footer .nav > li > a,
+.fc-total,
+.fc-who-dropdown {
+  padding: 0 15px;
+}
+
+.fc-footer .btn-link:focus,
+.fc-footer .btn-link:hover {
+  color: #fff;
+}
+
+.fc-footer .dropdown-menu {
+  bottom: 100%;
+  margin-bottom: 1px;
+  top: auto;
+}
+
+.fc-footer .nav > li > a:focus,
+.fc-footer .nav > li > a:hover {
+  background: transparent;
+  color: #fff;
+}
+
+.fc-footer .nav > .active > a,
+.fc-footer .nav > .active > a:focus,
+.fc-footer .nav > .active > a:hover {
+  background: #463265;
+  color: #fff;
+}
+
+.fc-footer .nav > .disabled > a,
+.fc-footer .nav > .disabled > a:focus,
+.fc-footer .nav > .disabled > a:hover {
+  opacity: .65;
+}
+
+.fc-form tr + tr + tr {
+  height: 5px;
+}
+
+.fc-form-table .btn {
+  background: transparent;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  display: none;
+  height: 1.428571429em;
+  padding: 0;
+  position: absolute;
+  width: 30px;
+  z-index: 1;
+}
+
+.fc-form-table .fc-new .btn {
+  display: none;
+}
+
+.fc-form-table tbody > tr > td,
+.fc-my-order-wrapper tbody > tr > td.fc-quantity-td {
+  background: #fff;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+.fc-form-table tbody > tr > td,
+.fc-form-table tbody > tr.danger > td,
+.fc-my-order-wrapper tbody > tr > td.fc-quantity-td,
+.fc-my-order-wrapper tbody > tr.danger > td.fc-quantity-td {
+  border: 1px solid #ccc;
+}
+
+.fc-form-table .danger .form-control,
+.fc-my-order-wrapper tbody > tr.danger > td,
+.fc-my-order-wrapper tbody > tr.danger > td.fc-quantity-td,
+.fc-my-order-wrapper .danger .form-control {
+  background: #f2dede;
+}
+
+.fc-form-table .danger .tt-hint {
+  background: #f2dede !important;
+}
+
+.fc-form-table .fc-quantity-td,
+.fc-quantity-wrapper > * > * {
+  /* max-width: 200px; */
+  width: 25%;
+}
+
+.fc-heading th {
+  text-align: center;
+}
+
+.fc-item,
+.fc-my-order-wrapper tbody {
+  cursor: pointer;
+}
+
+.fc-item:not([data-price]) {
+  cursor: not-allowed;
+}
+
+.fc-main,
+.fc-sidebar {
+  padding: 0;
+}
+
+.fc-main .form-control,
+.fc-main .has-error .form-control {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.fc-main .form-control,
+.fc-main .tt-hint {
+  border: 0;
+  height: 1.428571429em; /* https://bugzilla.mozilla.org/show_bug.cgi?id=82265 */
+  padding: 0;
+}
+
+.fc-main .fc-who {
+  padding-left: 30px;
+}
+
+.fc-main .form-group {
+  display: block !important;
+  margin: 0;
+  position: relative;
+}
+
+.fc-main .tt-hint {
+  background: #fff !important;
+  width: 100%;
+}
+
+.fc-my-order .fc-catalog,
+.fc-my-order .fc-expand-collapse,
+.fc-my-order-wrapper {
+  display: none;
+}
+
+.fc-my-order .fc-my-order-wrapper {
+  display: block;
+}
+
+.fc-my-order-wrapper table {
+  border: 1px solid transparent;
+}
+
+.fc-my-order-wrapper td > * {
+  height: 1.428571429em;
+  overflow: hidden;
+}
+
+.fc-my-order-wrapper .fc-quantity-table {
+  bottom: 0;
+  position: absolute;
+  right: 0;
+}
+
+.fc-my-order-wrapper .fc-quantity-table,
+.fc-my-order-wrapper .fc-quantity-td {
+  width: 20%;
+}
+
+.fc-price,
+.fc-tax {
+  text-align: right;
+}
+
+.fc-overflow {
+  background: #563d7c;
+  background: linear-gradient(to left, #563d7c 8px, rgba(86, 61, 124, 0));
+  position: absolute;
+  right: 0;
+  text-align: right;
+  width: 15px;
+}
+
+.fc-quantity-wrapper {
+  position: relative;
+}
+
+.fc-quantity-wrapper > * {
+  position: absolute;
+  width: 100%;
+}
+
+.fc-quantity-wrapper > :before {
+  content: '.';
+  float: left;
+  visibility: hidden;
+}
+
+.fc-quantity-wrapper > :before,
+.fc-who-td {
+  /* max-width: 200px; */
+  width: 20%;
+}
+
+.fc-quantity-wrapper > * > * {
+  float: left;
+  overflow: hidden;
+}
+
+.fc-quantity-table tr {
+  border-color: transparent;
+}
+
+.fc-quantity-table tbody > tr > td {
+  border: 1px solid transparent;
+}
+
+.fc-quantity-td .dropdown-menu {
+  white-space: nowrap;
+}
+
+.fc-quantity-td .dropdown-menu > * {
+  padding: 3px 5px;
+}
+
+.fc-quantity-td .dropdown-menu > * > * {
+  margin: 0 10px;
+}
+
+.fc-selected > :before {
+  content: '\2713';
+  left: 0;
+  position: absolute;
+  text-align: center;
+  width: 20px;
+}
+
+.fc-sidebar .nav > li > a {
+  color: #716b7a;
+  padding: 5px 15px;
+}
+
+.fc-sidebar .nav > .active > a,
+.fc-sidebar .nav > .active > a:focus,
+.fc-sidebar .nav > .active > a:hover {
+  background: transparent;
+  color: #563d7c;
+  font-weight: bold;
+}
+
+.fc-total {
+  color: #fff;
+  line-height: 40px;
+  text-transform: uppercase;
+  visibility: hidden;
+}
+
+.fc-total-value {
+  font-size: 18px;
+  vertical-align: top;
+}
+
+.fc-who-dropdown .btn {
+  background: transparent;
+  border: 0;
+  color: #fff;
+  font-size: 18px;
+  line-height: 40px;
+  max-width: 100px;
+  overflow: hidden;
+  padding: 0;
+  padding-right: 15px;
+  position: relative;
+}
+
+.fc-who-dropdown .caret {
+  border-top: 6px solid #fff;
+}
+
+.fc-who-dropdown[data-value=''] .btn {
+  font-style: italic;
+}
+
+.has-error .form-control {
+       text-decoration: underline dotted #b94a48;
+  -moz-text-decoration-color: #b94a48;
+  -moz-text-decoration-line: underline;
+  -moz-text-decoration-style: dotted;
+}
+
+.has-error .form-control:focus {
+       text-decoration-color: #953b39;
+  -moz-text-decoration-color: #953b39;
+}
+
+.popover {
+  width: 300px;
+}
+
+.popover li {
+  margin-bottom: 10px;
+}
+
+.table .table {
+  background: transparent;
+}
+
+.tt-is-under-cursor.tt-suggestion {
+  background: #428bca;
+  color: #fff;
+}
+
+.tt-suggestion {
+  padding: 3px 20px;
+}
+
+.tt-suggestion > p {
+  margin: 0;
+}

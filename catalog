@@ -1,0 +1,152 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import hashlib, re, sys
+from lxml import etree
+from lxml.builder import E
+from StringIO import StringIO
+from twisted.internet import protocol, reactor, tcp
+from twisted.web import http
+from zipfile import ZipFile
+
+class factory(protocol.ClientFactory):
+  class protocol(http.HTTPClient):
+    def connectionMade(ctx):
+
+      ctx.messageBody = StringIO()
+      ctx.handleResponsePart = ctx.messageBody.write
+
+      ctx.sendCommand('GET', '/content/CATALOG.xlsx')
+      ctx.sendHeader('Host', 'omfoods.com')
+      ctx.endHeaders()
+
+    def handleResponseEnd(ctx):
+      if reactor.running:
+
+        sys.stdout.write(''.join((
+          '<!DOCTYPE html>',
+          '<link href="css/bootstrap.min.css" rel="stylesheet">',
+          '<link href="css/style.css" rel="stylesheet">',
+          '<title>Food Club</title>',
+          '<div class="col-xs-3 fc-sidebar">',
+            '<ul class="nav">')))
+
+        main = StringIO()
+        main.write(''.join((
+          '<div class="col-xs-9 fc-main">',
+            '<table class="fc-catalog table table-condensed table-hover table-striped"><thead>',
+              '<tr><th>Code</th><th>Certified Organic</th><th>Description</th><th>Origin</th><th>Weight Volume</th><th>Price</th><th>Tax</th><th>Order</th></tr>',
+            '</thead>')))
+
+        with ZipFile(ctx.messageBody) as z:
+
+          tree = etree.parse(z.open('xl/sharedStrings.xml'))
+          s = tuple(re.sub(' +', ' ', ''.join(t.text or '' for t in si.xpath('descendant::*[local-name() = "t"]'))).strip() for si in tree.xpath('descendant::*[local-name() = "si"]'))
+
+          tree = etree.parse(z.open('xl/worksheets/sheet1.xml'))
+
+        def callback(c):
+
+          td = etree.SubElement(tr, 'td')
+          if len(tr) == 1:
+            td.set('class', 'fc-code')
+
+          elif len(tr) == 5:
+            td.set('class', 'fc-weight')
+
+          elif len(tr) == 6:
+            td.set('class', 'fc-price')
+
+          elif len(tr) == 7:
+            td.set('class', 'fc-tax')
+
+          elif len(tr) == 8:
+            td.set('class', 'fc-order')
+
+          try:
+            v, = c.xpath('descendant::*[local-name() = "v"]')
+
+          except ValueError:
+            return
+
+          if c.get('t') == 's':
+
+            string = s[int(v.text)]
+            if len(tr) == 5 and string != '1 each':
+              string = string.replace(' ', '').replace('-', ' - ').replace('x', ' x ')
+
+              tr.set('data-weight', string)
+
+            else:
+              if len(tr) == 1:
+                tr.set('data-code', string)
+
+            td.text = string
+
+            return string
+
+          if len(tr) == 6:
+            tr.set('data-price', v.text)
+            td.text = '$' + format(float(v.text), '.2f')
+
+          elif len(tr) == 7:
+            tr.set('data-tax', v.text)
+            td.text = str(float(v.text) * 100).strip('.0') + '%'
+
+          else:
+            td.text = v.text
+
+        product = None
+        for row in tree.xpath('descendant::*[local-name() = "row"]'):
+          tr = E.tr({ 'class': 'fc-item' })
+
+          d = map(callback, row.xpath('descendant::*[local-name() = "c"]'))
+          if d not in (['CODE', 'Certified OG', 'DESCRIPTION', 'ORIGIN', 'WEIGHTVOLUME', 'PRICE', 'TAX', 'ORDER'], ['CODE', 'Certified OG', 'DESCRIPTION', 'ORIGIN', 'WEIGHTVOLUME', 'PRICE', 'TAX', 'ORDER', None], [None, None, 'MISCELLANEOUS, ctd', None, None, None, None, None], []) and d[2]:
+            if d[:2] == [None, None] and d[3:] in ([None, None, None, None, None], [None, None, None, None, None, None]):
+
+              category = d[2].strip(':')
+              anchor = hashlib.sha1(category).hexdigest()[:6]
+
+              sys.stdout.write(etree.tostring(E.li(E.a(category, href='#' + anchor))))
+
+              if product:
+                main.write('</tbody>')
+
+                product = None
+
+              main.write(etree.tostring(E.tbody({ 'class': 'fc-heading', 'id': anchor }, E.tr(E.th(category, colspan='8')))))
+
+            else:
+              if tr.get('data-code').split('-', 1)[0] != product:
+                if product:
+                  main.write('</tbody>')
+
+                main.write('<tbody>')
+
+                product = d[0].split('-', 1)[0]
+
+              if tr.get('data-weight') and tr.get('data-price'):
+                tr.set('title', ' - '.join('$' + format(float(tr.get('data-price')) / reduce(lambda a, b: a * reduce(lambda a, b: a / b, map(float, b.split('/'))), re.sub('[a-z]*$', '', itm, flags=re.I).split(' x '), 1), '.2f') + '/' + re.sub('.*[^a-z]', '', itm, flags=re.I) for itm in tr.get('data-weight').split(' - ')))
+
+              main.write(etree.tostring(tr))
+
+        if product:
+          main.write('</tbody>')
+
+        sys.stdout.write(''.join((
+            '</ul>',
+          '</div>',
+          main.getvalue(),
+            '</table>',
+          '</div>',
+          '<script src="http://code.jquery.com/jquery.min.js"></script>',
+          '<script src="js/bootstrap.min.js"></script>',
+          '<script src="js/typeahead.min.js"></script>',
+          '<script src="http://d3js.org/d3.v3.min.js"></script>',
+          '<script src="js/script.js"></script>')))
+
+        reactor.stop()
+
+tcp.Connector('omfoods.com', 'http', factory(), 30, None, reactor).connect()
+
+reactor.run()
